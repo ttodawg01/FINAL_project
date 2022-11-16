@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from app import app
 from app.forms import SignUpForm
+from app.models import User
 
 @app.route('/')
 def index():
@@ -20,9 +21,10 @@ def signup():
         username = form.username.data
         password = form.password.data
         print(email, username, password)
-
+        #add user to the database
+        new_user = User(email=email, username=username, password=password)
         # flash a message
-        flash("You have successfully signed up!", 'success')
+        flash(f"{new_user} has succesfully signed up!", 'success')
 
         #go back to the main page
         return redirect(url_for('index'))
