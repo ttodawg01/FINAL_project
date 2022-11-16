@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from app import app
 from app.forms import SignUpForm
 
@@ -20,6 +20,9 @@ def signup():
         username = form.username.data
         password = form.password.data
         print(email, username, password)
+
+        # flash a message
+        flash("You have successfully signed up!")
 
         #go back to the main page
         return redirect(url_for('index'))
