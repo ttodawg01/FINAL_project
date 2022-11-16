@@ -22,7 +22,7 @@ def signup():
         print(email, username, password)
 
         # flash a message
-        flash("You have successfully signed up!")
+        flash("You have successfully signed up!", 'success')
 
         #go back to the main page
         return redirect(url_for('index'))

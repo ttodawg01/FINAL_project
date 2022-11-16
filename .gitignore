@@ -1,2 +1,6 @@
 venv
 __pycahce__
+requirement.txt
+
+# ignore database
+app.db
