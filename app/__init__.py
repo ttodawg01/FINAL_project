@@ -2,6 +2,7 @@ from flask import Flask
 #import sql achemy
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 from config import Config
 
 
@@ -14,5 +15,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 # create migrate
 migrate = Migrate(app, db)
+#let our app allow login capability
+login = LoginManager(app)
 
 from . import routes, models
