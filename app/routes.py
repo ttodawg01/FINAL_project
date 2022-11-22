@@ -59,10 +59,11 @@ def index():
 
     results = crypto.get_top_10()
 
-    for result in results:
-        result['quote']['USD']['price'] = '$ ' + "{:.2f}".format(result['quote']['USD']['price'])
+    # for result in results:
+    #     result['quote']['USD']['price'] = '$ ' + "{:.2f}".format(result['quote']['USD']['price'])
 
-    return render_template('index.html', **locals())
+    posts = Post.query.order_by(Post.date_created.desc()).all()
+    return render_template('index.html', posts=posts)
 
 @app.route('/posts')
 def post():
@@ -137,4 +138,11 @@ def create():
         return redirect(url_for('index'))
 
     return render_template('create.html', form=form)
-    return render_template('create.html', form=form)
+
+@app.route('/posts/<post_id>') #lets us be able to see a specefic post
+def get_post(post_id):
+    post = Post.query.get(post_id)
+    if not post:
+        flash(f"Post with id #{post_id} does not exist", "warning")
+        return redirect(url_for('index'))
+    return render_template('post.html', post=post)
