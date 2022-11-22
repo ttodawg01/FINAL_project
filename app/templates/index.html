@@ -1,4 +1,6 @@
+
 {% extends 'base.html' %}
+
 
 {% block title %}Home{% endblock %}
 
@@ -7,5 +9,13 @@
   <h1 class="text-center">Hello {{ current_user }}!</h1>
   {% else %}
   <h1 class="text-center">Hello, please sign up or login to use the blog</h1>
+  {% for obj in results %}
+    <!-- <tr> -->
+      <h1>{{obj.name}}</h1>
+      <td>{{obj.symbol}}</td>
+      <td>{{obj.slug}}</td>
+      <td>{{obj.quote.USD.price}}</td>
+    <!-- </tr> -->
+    {% endfor %}
   {% endif %}
 {% endblock content %}

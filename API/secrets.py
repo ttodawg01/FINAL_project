@@ -9,7 +9,6 @@ headers = {
   'X-CMC_PRO_API_KEY': api.API_KEY,
 }
 r = requests.get(url, headers = headers)
-# print(r.json())
 
 class GetInfo:
     def __init__(self, token):
@@ -35,4 +34,4 @@ info = GetInfo(api.API_KEY)
 
 # print(pp(info.GetAllCoins()))
 
-print(pp(info.GetPrice('ETH')))
+print(pp(info.GetPrice('BTC')))

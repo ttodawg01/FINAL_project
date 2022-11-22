@@ -6,3 +6,5 @@ requirement.txt
 app.db
 
 api.py
+secrets.py
+API

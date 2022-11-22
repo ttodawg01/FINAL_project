@@ -3,10 +3,66 @@ from flask_login import login_user, logout_user
 from app import app
 from app.forms import SignUpForm, LoginForm
 from app.models import User
+import requests
+from requests import Session
+import json
+import API.api as secrets
+
+
+class Crypto:
+
+    def get_top_5(self):
+
+        url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+        parameters = {
+          'start':'1',
+          'limit':'5',
+          'convert':'USD'
+        }
+        headers = {
+          'Accepts': 'application/json',
+          'X-CMC_PRO_API_KEY': secrets.API_KEY,
+        }
+
+        session = Session()
+        session.headers.update(headers)
+
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+        return data['data']
+
+    def get_top_10(self):
+
+        url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+        parameters = {
+          'start':'1',
+          'limit':'10',
+          'convert':'USD'
+        }
+        headers = {
+          'Accepts': 'application/json',
+          'X-CMC_PRO_API_KEY': secrets.API_KEY,
+        }
+
+        session = Session()
+        session.headers.update(headers)
+
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+        return data['data']
+
+
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    crypto = Crypto()
+
+    results = crypto.get_top_10()
+
+    for result in results:
+        result['quote']['USD']['price'] = '$ ' + "{:.2f}".format(result['quote']['USD']['price'])
+
+    return render_template('index.html', **locals())
 
 @app.route('/posts')
 def post():
