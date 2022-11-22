@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user, login_required
 from app import app
-from app.forms import SignUpForm, LoginForm
-from app.models import User
+from app.forms import SignUpForm, LoginForm, PostForm
+from app.models import User, Post
 import requests
 from requests import Session
 import json
@@ -120,3 +120,21 @@ def logout():
     logout_user()
     flash('You have been logged out', 'info')
     return redirect(url_for('index'))
+
+
+@app.route('/create', methods=['GET', 'POST'])
+@login_required
+def create():
+    form = PostForm()
+    if form.validate_on_submit():
+        # Get the data from the form
+        title = form.title.data
+        body = form.body.data
+        new_post = Post(title=title, body=body, user_id=current_user.id)
+        # flash a message 
+        flash(f"{current_user} just posted!", "success")
+        # Redirect back to the home page
+        return redirect(url_for('index'))
+
+    return render_template('create.html', form=form)
+    return render_template('create.html', form=form)
