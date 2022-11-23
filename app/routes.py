@@ -7,11 +7,12 @@ import requests
 from requests import Session
 import json
 import API.api as secrets
+from newsapi import NewsApiClient
+# from secrets2 import API_KEY2
 
 
 class Crypto:
-
-    def get_top_5(self):
+    def get_top_5(self): #method for the top 5
 
         url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
         parameters = {
@@ -21,7 +22,7 @@ class Crypto:
         }
         headers = {
           'Accepts': 'application/json',
-          'X-CMC_PRO_API_KEY': secrets.API_KEY,
+          'X-CMC_PRO_API_KEY': secrets.API_KEY, 
         }
 
         session = Session()
@@ -31,17 +32,17 @@ class Crypto:
         data = json.loads(response.text)
         return data['data']
 
-    def get_top_10(self):
+    def get_top_15(self): #method to get the top 10 cyrptocurrencies
 
         url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
         parameters = {
           'start':'1',
-          'limit':'10',
-          'convert':'USD'
+          'limit':'15',  #top 15 cryptocurrencies
+          'convert':'USD'  #translated to be read in us sollar currency
         }
         headers = {
           'Accepts': 'application/json',
-          'X-CMC_PRO_API_KEY': secrets.API_KEY,
+          'X-CMC_PRO_API_KEY': secrets.API_KEY,  #hide my api key
         }
 
         session = Session()
@@ -50,7 +51,8 @@ class Crypto:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
         return data['data']
-
+#im returning the data right here so i have access to the other important details associated with the crypto coin
+#returns an array
 
 
 @app.route('/')
@@ -182,10 +184,36 @@ def delete_post(post_id):
 @app.route('/crypto')
 @login_required
 def crypto():
-    crypto = Crypto()
+    crypto = Crypto()  #calling the class 
 
-    results = crypto.get_top_10()
+    results = crypto.get_top_15() #calling the method to get the top 15 crypto in the market
 
     for result in results:
-        result['quote']['USD']['price'] = '$ ' + "{:.2f}".format(result['quote']['USD']['price'])
+        result['quote']['USD']['price'] = '$ ' + "{:.2f}".format(result['quote']['USD']['price']) 
+        #as i loop through my results it will return the coin individually and format to 2 decimal places
+
     return render_template('crypto.html', **locals())
+    #export on the locals** without this my data does now show up
+
+
+@app.route('/news')
+@login_required
+def news():
+    newsapi = NewsApiClient(api_key='27d11cfca0cc47ceb72d57376f89f5aa')
+    topheadlines = newsapi.get_top_headlines('crypto')
+ 
+    articles = topheadlines['articles']
+ 
+    desc = []
+    news = []
+    img = []
+ 
+    for i in range(len(articles)):
+        myarticles = articles[i]
+
+        news.append(myarticles['title'])
+        desc.append(myarticles['description'])
+        img.append(myarticles['urlToImage'])
+ 
+    mylist = zip(news, desc, img)
+    return render_template('news.html', context = mylist)

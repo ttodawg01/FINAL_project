@@ -17,7 +17,7 @@
       <blockquote class="blockquote mb-0">
           <p>{{ post.body }}</p>
           <footer class="blockquote-footer">{{ post.author.username.title() }} 
-              <cite title="Source Title">{{ post.date_created.strftime('%A, %B %d at %I:%M%p') }}</cite>
+              <cite title="Source Title">{{ post.date_created.strftime('%A, %B %d') }}</cite>
           </footer>
       </blockquote>
       <a href="{{ url_for('get_post', post_id=post.id) }}" class="btn btn-primary mt-2">See More</a> 
@@ -30,6 +30,19 @@
 {% endfor %}
 
   {% else %}
-  <h1 class="text-center">Hello, please sign up or login to use the blog</h1>
+  <style>
+    #box{
+      border: 2px solid lightgray;
+      padding: 30px
+    }
+  </style>
+<div class="container">
+  <h1>Welcome to the Crypto newtwork</h1>
+  <h6 class="my-3">The social platform for major crypto news and a community for traders to give insight!</h6>
+  <p id="box">Don't have an account yet? <a href="{{ url_for('signup') }}">Sign up</a></p>
+
+  <h2>Coming Soon!</h2>
+  
+</div>
   {% endif %}
 {% endblock content %}

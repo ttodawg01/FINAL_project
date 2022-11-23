@@ -3,13 +3,37 @@
 {% block title %}Crypto Discussion{% endblock %}
 {% block content %}
 
-{% for obj in results %}
+<!-- for loop so i can access the data -->
 <!-- <tr> -->
-  <h1>{{obj.name}}</h1>
-  <td>{{obj.symbol}}</td>
-  <td>{{obj.slug}}</td>
-  <td>{{obj.quote.USD.price}}</td>
+
+
+<div class="container">
+
+
+  
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Crypto Name</th>
+        <th scope="col">Symbol</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+
+      {% for obj in results %}
+      <tr>
+        <td>{{obj.name}}</td>
+        <td>{{obj.symbol}}</td>
+        <td>{{obj.quote.USD.price}}</td>
+      </tr>
+      {% endfor %}
+
+    </tbody>
+   </table>
+</div>
 <!-- </tr> -->
-{% endfor %}
 
 {% endblock content %}

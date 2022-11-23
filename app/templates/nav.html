@@ -8,9 +8,6 @@
       </button>
         <div class="collapse navbar-collapse" id="responsivenavbar">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
-                </li>
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('create') }}">Create More</a> 
@@ -21,6 +18,9 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('crypto') }}">Crypto Forum</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('news') }}">News Forum</a>
                 </li>
                 {% else %}
                 <li class="nav-item">

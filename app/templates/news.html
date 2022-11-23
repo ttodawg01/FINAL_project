@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}News here{% endblock %}
+
+{% block content %}
+<div class="container">
+ 
+    {% for new, des, i in context %}
+ 
+    <img src="{{i}}" alt="New Images">
+    <h3>News: </h3> {{new}}
+    <h3>Description: </h3> {{des}}
+    {% endfor %}
+ 
+ 
+</div>
+{% endblock content %}
