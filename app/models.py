@@ -54,3 +54,17 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"<Post {self.id} | {self.title}>"
+
+
+#update method for post so you can be able to edit past posts
+    def update(self, **kwargs):
+        for k, v in kwargs.items():
+            if k in {'title', 'body'}:
+                setattr(self, k, v)
+        # Save the updates to the database
+        db.session.commit()
+
+    #delete method from the database
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

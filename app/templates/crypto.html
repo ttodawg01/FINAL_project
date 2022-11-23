@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Crypto Discussion{% endblock %}
+{% block content %}
+
+{% for obj in results %}
+<!-- <tr> -->
+  <h1>{{obj.name}}</h1>
+  <td>{{obj.symbol}}</td>
+  <td>{{obj.slug}}</td>
+  <td>{{obj.quote.USD.price}}</td>
+<!-- </tr> -->
+{% endfor %}
+
+{% endblock content %}

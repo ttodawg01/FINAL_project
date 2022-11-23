@@ -22,19 +22,14 @@
       </blockquote>
       <a href="{{ url_for('get_post', post_id=post.id) }}" class="btn btn-primary mt-2">See More</a> 
       <!-- when user hovers it should be able to take them to a specefic post -->
+      {% if post.author == current_user %}
+      <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn btn-success mt-2">Edit</a>
+      {% endif %}
       </div>
   </div>
 {% endfor %}
 
   {% else %}
   <h1 class="text-center">Hello, please sign up or login to use the blog</h1>
-  {% for obj in results %}
-    <!-- <tr> -->
-      <h1>{{obj.name}}</h1>
-      <td>{{obj.symbol}}</td>
-      <td>{{obj.slug}}</td>
-      <td>{{obj.quote.USD.price}}</td>
-    <!-- </tr> -->
-    {% endfor %}
   {% endif %}
 {% endblock content %}
