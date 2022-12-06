@@ -9,6 +9,7 @@ import json
 import API.api as secrets
 from newsapi import NewsApiClient
 # from secrets2 import API_KEY2
+from flask_mail import Mail, Message
 
 
 class Crypto:
@@ -86,6 +87,13 @@ def signup():
 
         #go back to the main page
         return redirect(url_for('index'))
+    # msg = Message('Confirm email', sender='ttodawg@outlook.com', recipients=[email])
+
+    # link = url_for('confirm_email', _external=True)
+
+    # msg.body = 'your link is {}'.format(link)
+
+    # mail.send(msg)
 
     return render_template('signup.html', form=form)
 
@@ -200,7 +208,7 @@ def crypto():
 @login_required
 def news():
     newsapi = NewsApiClient(api_key='27d11cfca0cc47ceb72d57376f89f5aa')
-    topheadlines = newsapi.get_top_headlines('crypto')
+    topheadlines = newsapi.get_top_headlines()
  
     articles = topheadlines['articles']
  

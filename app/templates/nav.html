@@ -1,12 +1,17 @@
 
-
-<nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top">
+<style>
+  #navBar{
+    display: flex;
+    justify-content: space-evenly;
+  }
+</style>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top" id="navBar">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ url_for('index') }}">Get Started</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-        <!-- <span class="navbar-toggler-icon"></span> -->
+        <span class="navbar-toggler-icon"></span>
       </button>
-        <div class="collapse navbar-collapse" id="responsivenavbar">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
